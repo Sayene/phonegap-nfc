@@ -35,7 +35,6 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
 
-/* remove implements NfcAdapter.OnNdefPushCompleteCallback */
 public class NfcPlugin extends CordovaPlugin implements NfcAdapter.OnNdefPushCompleteCallback {
     private static final String REGISTER_MIME_TYPE = "registerMimeType";
     private static final String REMOVE_MIME_TYPE = "removeMimeType";
@@ -552,7 +551,7 @@ public class NfcPlugin extends CordovaPlugin implements NfcAdapter.OnNdefPushCom
                     }
 
                     if (p2pMessage != null) {
-                       // nfcAdapter.setNdefPushMessage(p2pMessage, getActivity());
+                        nfcAdapter.setNdefPushMessage(p2pMessage, getActivity());
                     }
                 } catch (IllegalStateException e) {
                     // issue 110 - user exits app with home button while nfc is initializing
@@ -581,7 +580,6 @@ public class NfcPlugin extends CordovaPlugin implements NfcAdapter.OnNdefPushCom
     }
 
     private void startNdefBeam(final CallbackContext callbackContext, final Uri[] uris) {
-        return;
         getActivity().runOnUiThread(() -> {
 
             NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(getActivity());
@@ -610,8 +608,6 @@ public class NfcPlugin extends CordovaPlugin implements NfcAdapter.OnNdefPushCom
     private void startNdefPush(final CallbackContext callbackContext) {
         getActivity().runOnUiThread(() -> {
 
-            return;
-
             NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(getActivity());
 
             if (nfcAdapter == null) {
@@ -636,7 +632,7 @@ public class NfcPlugin extends CordovaPlugin implements NfcAdapter.OnNdefPushCom
             NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(getActivity());
 
             if (nfcAdapter != null) {
-              //  nfcAdapter.setNdefPushMessage(null, getActivity());
+                nfcAdapter.setNdefPushMessage(null, getActivity());
             }
 
         });
@@ -648,7 +644,7 @@ public class NfcPlugin extends CordovaPlugin implements NfcAdapter.OnNdefPushCom
             NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(getActivity());
 
             if (nfcAdapter != null) {
-              //  nfcAdapter.setBeamPushUris(null, getActivity());
+                nfcAdapter.setBeamPushUris(null, getActivity());
             }
 
         });
@@ -843,7 +839,6 @@ public class NfcPlugin extends CordovaPlugin implements NfcAdapter.OnNdefPushCom
         getActivity().setIntent(intent);
     }
 
-    /* remove */
     @Override
     public void onNdefPushComplete(NfcEvent event) {
 
