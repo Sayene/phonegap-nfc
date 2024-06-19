@@ -582,52 +582,10 @@ public class NfcPlugin extends CordovaPlugin implements NfcAdapter.OnNdefPushCom
 
     private void startNdefBeam(final CallbackContext callbackContext, final Uri[] uris) {
         return;
-        getActivity().runOnUiThread(() -> {
-
-            NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(getActivity());
-
-            if (nfcAdapter == null) {
-                callbackContext.error(STATUS_NO_NFC);
-            } else if (!nfcAdapter.isNdefPushEnabled()) {
-                callbackContext.error(STATUS_NDEF_PUSH_DISABLED);
-            } else {
-                nfcAdapter.setOnNdefPushCompleteCallback(NfcPlugin.this, getActivity());
-                try {
-                    nfcAdapter.setBeamPushUris(uris, getActivity());
-
-                    PluginResult result = new PluginResult(PluginResult.Status.NO_RESULT);
-                    result.setKeepCallback(true);
-                    handoverCallback = callbackContext;
-                    callbackContext.sendPluginResult(result);
-
-                } catch (IllegalArgumentException e) {
-                    callbackContext.error(e.getMessage());
-                }
-            }
-        });
     }
 
     private void startNdefPush(final CallbackContext callbackContext) {
-        getActivity().runOnUiThread(() -> {
-
-            return;
-
-            NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(getActivity());
-
-            if (nfcAdapter == null) {
-                callbackContext.error(STATUS_NO_NFC);
-            } else if (!nfcAdapter.isNdefPushEnabled()) {
-                callbackContext.error(STATUS_NDEF_PUSH_DISABLED);
-            } else {
-                nfcAdapter.setNdefPushMessage(p2pMessage, getActivity());
-                nfcAdapter.setOnNdefPushCompleteCallback(NfcPlugin.this, getActivity());
-
-                PluginResult result = new PluginResult(PluginResult.Status.NO_RESULT);
-                result.setKeepCallback(true);
-                shareTagCallback = callbackContext;
-                callbackContext.sendPluginResult(result);
-            }
-        });
+        return;
     }
 
     private void stopNdefPush() {
